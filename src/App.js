@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {useState, useEffect} from 'react';
+import axios from 'axios';
 function App() {
+
+  const [value,setValue] = useState([])
+
+    useEffect(()=>{
+  
+      axios
+      .get("https://fakestoreapi.com/users")
+      .then((response)=>{
+       setValue(response.data);
+       
+      })
+
+
+    },[])
+  
+
+
+   
+   
   return (
+    <>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      
+     {value.map(({id, email, username})=>{
+     return <div key={id}><strong>email:</strong>{email} <br/>
+     <strong>name:</strong>{username}</div>
+     })}
+  </div>
+
+  </>
   );
+  
 }
 
 export default App;
